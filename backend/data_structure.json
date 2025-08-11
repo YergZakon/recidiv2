@@ -1,0 +1,462 @@
+{
+  "RISK_ANALYSIS_RESULTS.xlsx": {
+    "sheets": {
+      "Sheet1": {
+        "row_count": 11984,
+        "columns": [
+          "ИИН",
+          "Фамилия",
+          "Имя",
+          "Отчество",
+          "дата рождения",
+          "возраст",
+          "земельный участок",
+          "телефон",
+          "вод удостоверение",
+          "дата получения ву",
+          "недвижимость",
+          "юрид лицо",
+          "последняя дата пенс отчислений",
+          "транспорт",
+          "дата операции по транспорту",
+          "дата операции за госуслугой",
+          "обращение за Госуслугой",
+          "пересечения госграницы",
+          "дата пересчения госграницы",
+          "дата обращения к нотариусу",
+          "обращения к нотариусу",
+          "поездки на ЖД",
+          "дата поездки на жд",
+          "age_from_file",
+          "current_age",
+          "phone_str",
+          "phone_operator",
+          "has_phone",
+          "phone_operator_type",
+          "земельный участок_binary",
+          "вод удостоверение_binary",
+          "недвижимость_binary",
+          "юрид лицо_binary",
+          "транспорт_binary",
+          "пересечения госграницы_binary",
+          "поездки на ЖД_binary",
+          "обращение за Госуслугой_binary",
+          "обращения к нотариусу_binary",
+          "driving_license_date",
+          "driving_license_days_ago",
+          "driving_license_years_ago",
+          "has_driving_license",
+          "pension_contrib_date",
+          "pension_contrib_days_ago",
+          "pension_contrib_years_ago",
+          "has_pension_contrib",
+          "vehicle_operation_date",
+          "vehicle_operation_days_ago",
+          "vehicle_operation_years_ago",
+          "has_vehicle_operation",
+          "gosuslugi_operation_date",
+          "gosuslugi_operation_days_ago",
+          "gosuslugi_operation_years_ago",
+          "has_gosuslugi_operation",
+          "border_crossing_date",
+          "border_crossing_days_ago",
+          "border_crossing_years_ago",
+          "has_border_crossing",
+          "notary_visit_date",
+          "notary_visit_days_ago",
+          "notary_visit_years_ago",
+          "has_notary_visit",
+          "railway_trip_date",
+          "railway_trip_days_ago",
+          "railway_trip_years_ago",
+          "has_railway_trip",
+          "economic_activity_score",
+          "mobility_score",
+          "social_activity_score",
+          "total_cases",
+          "days_since_first",
+          "criminal_period",
+          "last_violation_date",
+          "avg_days_between_cases",
+          "criminal_count",
+          "admin_count",
+          "unique_articles",
+          "most_common_article",
+          "violation_diversity",
+          "most_common_type",
+          "cases_with_parts",
+          "max_article_part",
+          "birth_date",
+          "age_at_first_violation",
+          "recidivism_rate",
+          "criminal_ratio",
+          "is_active",
+          "has_кража",
+          "has_мошенничество",
+          "has_грабеж",
+          "has_разбой",
+          "has_хулиганство",
+          "has_мелкое_хищение",
+          "has_побои",
+          "has_вымогательство",
+          "has_violations",
+          "has_criminal",
+          "is_recidivist",
+          "risk_category",
+          "has_deescalation",
+          "admin_to_criminal",
+          "criminal_to_admin",
+          "pattern_type",
+          "max_gap_days",
+          "min_gap_days",
+          "violation_acceleration",
+          "teenage_violations",
+          "young_adult_violations",
+          "adult_violations",
+          "mature_violations",
+          "first_criminal_age",
+          "criminal_debut_category",
+          "has_escalation",
+          "risk_early_criminal_debut",
+          "risk_young_escalation",
+          "risk_no_property_multiple_violations",
+          "risk_accelerating_pattern",
+          "risk_unstable_pattern",
+          "risk_high_youth_crime",
+          "risk_social_isolation",
+          "risk_rapid_escalation",
+          "risk_total_risk_score"
+        ],
+        "has_iin": true,
+        "has_risk_score": true,
+        "sample_data": {
+          "iin": "10126551420",
+          "risk_range": {
+            "min": 0.0,
+            "max": 8.0,
+            "mean": 3.0977136181575435
+          },
+          "patterns": [
+            "mixed_unstable",
+            "single",
+            "chronic_criminal",
+            "escalating",
+            "deescalating"
+          ]
+        },
+        "risk_field_name": "risk_total_risk_score"
+      }
+    },
+    "main_sheet": "Sheet1",
+    "total_rows": 11984
+  },
+  "ML_DATASET_COMPLETE.xlsx": {
+    "sheets": {
+      "Sheet1": {
+        "row_count": 11984,
+        "columns": [
+          "ИИН",
+          "Фамилия",
+          "Имя",
+          "Отчество",
+          "дата рождения",
+          "возраст",
+          "земельный участок",
+          "телефон",
+          "вод удостоверение",
+          "дата получения ву",
+          "недвижимость",
+          "юрид лицо",
+          "последняя дата пенс отчислений",
+          "транспорт",
+          "дата операции по транспорту",
+          "дата операции за госуслугой",
+          "обращение за Госуслугой",
+          "пересечения госграницы",
+          "дата пересчения госграницы",
+          "дата обращения к нотариусу",
+          "обращения к нотариусу",
+          "поездки на ЖД",
+          "дата поездки на жд",
+          "age_from_file",
+          "current_age",
+          "phone_str",
+          "phone_operator",
+          "has_phone",
+          "phone_operator_type",
+          "земельный участок_binary",
+          "вод удостоверение_binary",
+          "недвижимость_binary",
+          "юрид лицо_binary",
+          "транспорт_binary",
+          "пересечения госграницы_binary",
+          "поездки на ЖД_binary",
+          "обращение за Госуслугой_binary",
+          "обращения к нотариусу_binary",
+          "driving_license_date",
+          "driving_license_days_ago",
+          "driving_license_years_ago",
+          "has_driving_license",
+          "pension_contrib_date",
+          "pension_contrib_days_ago",
+          "pension_contrib_years_ago",
+          "has_pension_contrib",
+          "vehicle_operation_date",
+          "vehicle_operation_days_ago",
+          "vehicle_operation_years_ago",
+          "has_vehicle_operation",
+          "gosuslugi_operation_date",
+          "gosuslugi_operation_days_ago",
+          "gosuslugi_operation_years_ago",
+          "has_gosuslugi_operation",
+          "border_crossing_date",
+          "border_crossing_days_ago",
+          "border_crossing_years_ago",
+          "has_border_crossing",
+          "notary_visit_date",
+          "notary_visit_days_ago",
+          "notary_visit_years_ago",
+          "has_notary_visit",
+          "railway_trip_date",
+          "railway_trip_days_ago",
+          "railway_trip_years_ago",
+          "has_railway_trip",
+          "economic_activity_score",
+          "mobility_score",
+          "social_activity_score",
+          "total_cases",
+          "days_since_first",
+          "criminal_period",
+          "last_violation_date",
+          "avg_days_between_cases",
+          "criminal_count",
+          "admin_count",
+          "unique_articles",
+          "most_common_article",
+          "violation_diversity",
+          "most_common_type",
+          "cases_with_parts",
+          "max_article_part",
+          "birth_date",
+          "age_at_first_violation",
+          "recidivism_rate",
+          "criminal_ratio",
+          "has_escalation",
+          "is_active",
+          "has_кража",
+          "has_мошенничество",
+          "has_грабеж",
+          "has_разбой",
+          "has_хулиганство",
+          "has_мелкое_хищение",
+          "has_побои",
+          "has_вымогательство",
+          "has_violations",
+          "has_criminal",
+          "is_recidivist",
+          "risk_category"
+        ],
+        "has_iin": true,
+        "has_risk_score": false,
+        "sample_data": {
+          "iin": "10126551420"
+        }
+      }
+    },
+    "main_sheet": "Sheet1",
+    "total_rows": 11984
+  },
+  "crime_analysis_results.xlsx": {
+    "sheets": {
+      "Пред_Убийство": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Разбой": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Грабеж": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Кража": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Мошенничество": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Изнасилование": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Пред_Вымогательство": {
+        "row_count": 10,
+        "columns": [
+          "Предшествующее правонарушение",
+          "Тип",
+          "Количество",
+          "Процент"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Эскалация": {
+        "row_count": 205,
+        "columns": [
+          "Административное",
+          "Уголовное",
+          "Количество переходов"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      }
+    },
+    "main_sheet": null,
+    "total_rows": 275
+  },
+  "serious_crimes_analysis.xlsx": {
+    "sheets": {
+      "УБИЙСТВО": {
+        "row_count": 5,
+        "columns": [
+          "Предшественник",
+          "Процент",
+          "Тип"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "РАЗБОЙ": {
+        "row_count": 5,
+        "columns": [
+          "Предшественник",
+          "Процент",
+          "Тип"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "ГРАБЕЖ": {
+        "row_count": 5,
+        "columns": [
+          "Предшественник",
+          "Процент",
+          "Тип"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "КРАЖА": {
+        "row_count": 5,
+        "columns": [
+          "Предшественник",
+          "Процент",
+          "Тип"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "ИЗНАСИЛОВАНИЕ": {
+        "row_count": 5,
+        "columns": [
+          "Предшественник",
+          "Процент",
+          "Тип"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      },
+      "Админ-Уголовка переходы": {
+        "row_count": 17,
+        "columns": [
+          "Административное правонарушение",
+          "Уголовное преступление",
+          "Количество переходов",
+          "Вероятность"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      }
+    },
+    "main_sheet": null,
+    "total_rows": 42
+  },
+  "risk_escalation_matrix.xlsx": {
+    "sheets": {
+      "Sheet1": {
+        "row_count": 5,
+        "columns": [
+          "Административное правонарушение",
+          "Риск → Убийство",
+          "Риск → Разбой",
+          "Риск → Кража",
+          "Период эскалации"
+        ],
+        "has_iin": false,
+        "has_risk_score": false,
+        "sample_data": {}
+      }
+    },
+    "main_sheet": null,
+    "total_rows": 5
+  }
+}

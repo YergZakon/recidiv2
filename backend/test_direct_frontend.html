@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Frontend API</title>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</head>
+<body>
+    <h1>Direct Frontend API Test</h1>
+    
+    <div>
+        <input type="text" id="iin" value="010126551420" placeholder="IIN">
+        <button onclick="testSearch()">Search</button>
+    </div>
+    
+    <div id="result"></div>
+    
+    <script>
+        async function testSearch() {
+            const iin = document.getElementById('iin').value;
+            const resultDiv = document.getElementById('result');
+            
+            try {
+                console.log('Searching for IIN:', iin);
+                
+                const response = await axios.get(`http://127.0.0.1:8001/api/persons/search/${iin}`, {
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                });
+                
+                console.log('Response:', response);
+                
+                if (response.status === 200 && response.data.person) {
+                    resultDiv.innerHTML = `
+                        <div style="color: green;">
+                            <h3>✅ SUCCESS</h3>
+                            <p><strong>Person:</strong> ${response.data.person.full_name}</p>
+                            <p><strong>IIN:</strong> ${response.data.person.iin}</p>
+                            <p><strong>Risk:</strong> ${response.data.risk_calculation ? response.data.risk_calculation.risk_score + ' (' + response.data.risk_calculation.risk_level + ')' : 'N/A'}</p>
+                            <p><strong>Violations:</strong> ${response.data.violations ? response.data.violations.length : 0}</p>
+                            <p><strong>Forecasts:</strong> ${response.data.forecast_timeline ? response.data.forecast_timeline.forecasts.length : 0}</p>
+                            <details>
+                                <summary>Full Response</summary>
+                                <pre>${JSON.stringify(response.data, null, 2)}</pre>
+                            </details>
+                        </div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<div style="color: orange;">⚠️ No person data found</div>`;
+                }
+                
+            } catch (error) {
+                console.error('Error:', error);
+                
+                let errorMsg = 'Unknown error';
+                if (error.response) {
+                    errorMsg = `HTTP ${error.response.status}: ${error.response.data?.detail || error.response.statusText}`;
+                } else if (error.request) {
+                    errorMsg = 'Network error - no response received';
+                } else {
+                    errorMsg = error.message;
+                }
+                
+                resultDiv.innerHTML = `
+                    <div style="color: red;">
+                        <h3>❌ ERROR</h3>
+                        <p>${errorMsg}</p>
+                        <details>
+                            <summary>Error Details</summary>
+                            <pre>${JSON.stringify(error, null, 2)}</pre>
+                        </details>
+                    </div>
+                `;
+            }
+        }
+        
+        // Auto-test on load
+        window.onload = () => {
+            setTimeout(testSearch, 500);
+        };
+    </script>
+</body>
+</html>

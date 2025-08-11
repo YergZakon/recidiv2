@@ -1,0 +1,42 @@
+# FastAPI и сервер
+fastapi
+uvicorn[standard]
+python-multipart
+
+# База данных
+sqlalchemy
+alembic
+psycopg2-binary
+
+# Валидация и сериализация
+pydantic
+pydantic-settings
+email-validator
+
+# Безопасность
+python-jose[cryptography]
+passlib[bcrypt]
+python-dotenv
+
+# Работа с данными (из оригинального requirements.txt)
+pandas
+numpy
+openpyxl
+python-dateutil
+
+# Визуализация (если нужно для тестов)
+plotly
+matplotlib
+seaborn
+
+# ML (если используете)
+scikit-learn
+
+# Тестирование
+pytest
+pytest-asyncio
+httpx
+
+# Утилиты
+python-dateutil
+pytz
