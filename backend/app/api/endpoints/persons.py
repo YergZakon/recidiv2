@@ -7,12 +7,14 @@ from fastapi import APIRouter, HTTPException, Query, Depends
 from sqlalchemy.orm import Session
 from sqlalchemy import func
 from typing import Dict, List, Optional
-from datetime import datetime
+from datetime import datetime, timedelta
 import logging
 
 from app.core.database import get_db
 from app.core.constants import TOTAL_RECIDIVISTS, get_risk_level_key
 from app.models.real_data import PersonReal, RiskAssessmentHistory
+from app.services.risk_service import RiskService
+from app.services.individual_forecast_service import IndividualForecastService
 
 logger = logging.getLogger(__name__)
 router = APIRouter(prefix="/api/persons", tags=["Persons"])
@@ -267,8 +269,22 @@ async def search_by_iin(iin: str, db: Session = Depends(get_db)) -> Dict:
                 risk_result = risk_service.calculate_risk_for_person_dict(person_data)
                 logger.info(f"Risk result: {risk_result}")
                 
-                # Получаем прогнозы
-                forecasts = risk_service.forecaster.forecast_crime_timeline(person_data)
+                # Получаем индивидуальные прогнозы на основе истории
+                individual_forecast_service = IndividualForecastService()
+                try:
+                    individual_forecast = individual_forecast_service.calculate_individual_forecast(
+                        person_data, 
+                        violations
+                    )
+                    logger.info(f"Individual forecast: {individual_forecast}")
+                    # Преобразуем в нужный формат
+                    forecasts = {}
+                    for forecast in individual_forecast['forecasts']:
+                        forecasts[forecast['crime_type']] = forecast
+                except Exception as forecast_error:
+                    logger.error(f"Ошибка индивидуального прогнозирования: {forecast_error}")
+                    # Fallback к базовому прогнозированию
+                    forecasts = risk_service.forecaster.forecast_crime_timeline(person_data)
                 
                 # Безопасно извлекаем данные из результата
                 if isinstance(risk_result, dict):
@@ -336,7 +352,7 @@ async def search_by_iin(iin: str, db: Session = Depends(get_db)) -> Dict:
                     else:
                         date_predicted = forecast.get('date_predicted', '2024-12-31')
                     
-                    forecasts_list.append({
+                    forecast_item = {
                         "crime_type": forecast['crime_type'],
                         "probability": forecast.get('probability', 0.5),
                         "days_until": forecast.get('days', forecast.get('days_until', forecast.get('expected_days', 100))),
@@ -344,7 +360,15 @@ async def search_by_iin(iin: str, db: Session = Depends(get_db)) -> Dict:
                         "confidence": _convert_confidence_to_number(forecast.get('confidence', 0.7)),
                         "preventability": forecast.get('preventability', 80.0),
                         "risk_level": get_risk_level_key(forecast.get('probability', 50.0) / 10.0)
-                    })
+                    }
+                    
+                    # Добавляем факторы если они есть (индивидуальное прогнозирование)
+                    if 'factors' in forecast:
+                        forecast_item['factors'] = forecast['factors']
+                    if 'confidence_interval' in forecast:
+                        forecast_item['confidence_interval'] = forecast['confidence_interval']
+                    
+                    forecasts_list.append(forecast_item)
             
             forecast_timeline = {
                 "person_id": person['id'],
@@ -472,8 +496,35 @@ async def calculate_risk_from_form(data: Dict) -> Dict:
             try:
                 risk_result = risk_service.calculate_risk_for_person_dict(person_data)
                 
-                # Получаем прогнозы
-                forecasts = risk_service.forecaster.forecast_crime_timeline(person_data)
+                # Получаем индивидуальные прогнозы для ручного ввода (без истории нарушений)
+                individual_forecast_service = IndividualForecastService()
+                try:
+                    # Для ручного ввода создаем базовую историю на основе переданных данных
+                    mock_violations = []
+                    if person_data.get('violations_count', 0) > 0:
+                        # Создаем фиктивные нарушения для анализа паттерна
+                        for i in range(min(person_data['violations_count'], 5)):
+                            days_ago = 30 * (i + 1)  # Распределяем по месяцам
+                            violation_date = (datetime.now() - timedelta(days=days_ago)).strftime('%Y-%m-%d')
+                            mock_violations.append({
+                                'violation_date': violation_date,
+                                'violation_type': 'Уголовное преступление',
+                                'severity': 'serious'
+                            })
+                    
+                    individual_forecast = individual_forecast_service.calculate_individual_forecast(
+                        person_data, 
+                        mock_violations
+                    )
+                    logger.info(f"Individual forecast for manual: {individual_forecast}")
+                    # Преобразуем в нужный формат
+                    forecasts = {}
+                    for forecast in individual_forecast['forecasts']:
+                        forecasts[forecast['crime_type']] = forecast
+                except Exception as forecast_error:
+                    logger.error(f"Ошибка индивидуального прогнозирования: {forecast_error}")
+                    # Fallback к базовому прогнозированию
+                    forecasts = risk_service.forecaster.forecast_crime_timeline(person_data)
                 
                 # Безопасно извлекаем данные из результата
                 if isinstance(risk_result, dict):
@@ -539,7 +590,7 @@ async def calculate_risk_from_form(data: Dict) -> Dict:
                     else:
                         date_predicted = forecast.get('date_predicted', '2024-12-31')
                     
-                    forecasts_list.append({
+                    forecast_item = {
                         "crime_type": forecast['crime_type'],
                         "probability": forecast.get('probability', 0.5),
                         "days_until": forecast.get('days', forecast.get('days_until', forecast.get('expected_days', 100))),
@@ -547,7 +598,15 @@ async def calculate_risk_from_form(data: Dict) -> Dict:
                         "confidence": _convert_confidence_to_number(forecast.get('confidence', 0.7)),
                         "preventability": forecast.get('preventability', 80.0),
                         "risk_level": get_risk_level_key(forecast.get('probability', 50.0) / 10.0)
-                    })
+                    }
+                    
+                    # Добавляем факторы если они есть (индивидуальное прогнозирование)
+                    if 'factors' in forecast:
+                        forecast_item['factors'] = forecast['factors']
+                    if 'confidence_interval' in forecast:
+                        forecast_item['confidence_interval'] = forecast['confidence_interval']
+                    
+                    forecasts_list.append(forecast_item)
             
             forecast_timeline = {
                 "person_id": person['id'],

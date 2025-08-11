@@ -83,9 +83,15 @@ const PersonSearch: React.FC = () => {
           );
         }
         
-        // Прогнозы уже загружены в searchResult, дополнительные вызовы не нужны
-        // dispatch(fetchForecastTimeline({ personId: searchResult.person.id }));
-        // dispatch(fetchInterventionPlan(searchResult.person.id));
+        // Устанавливаем прогнозы из searchResult в store
+        if (searchResult.forecast_timeline) {
+          dispatch(setCurrentTimeline(searchResult.forecast_timeline));
+        }
+        
+        // Устанавливаем расчет риска если он есть в searchResult
+        if (searchResult.risk_calculation) {
+          dispatch(setCurrentCalculation(searchResult.risk_calculation));
+        }
         
         toast.success('Лицо найдено, данные загружены');
       }
